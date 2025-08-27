@@ -1,5 +1,8 @@
 import React from 'react';
+import { prepareExpenseBarChartData}  from "../../Utils/helper";
 import CustomBarChart from "../Charts/CustomBarChart";
+import { useState, useEffect } from 'react';
+
 
  const Last30DaysExpenses = ({data}) => {
     const [charData, setCharData] = useState([]);

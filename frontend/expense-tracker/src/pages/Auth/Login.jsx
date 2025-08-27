@@ -5,6 +5,7 @@ import { validateEmail } from '../../Utils/helper';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../context/userContext';
 import { API_PATHS } from "../../Utils/apiPath"; 
+import axiosInstance from '../../Utils/axiosinstance';
 
 
 const Login = () => {
@@ -19,6 +20,7 @@ const Login = () => {
 
   // handle login form submit
   const handleLogin = async (e) => {
+    console.log("hello")
     e.preventDefault();
 
       if (!email && !password) {
@@ -47,7 +49,7 @@ const Login = () => {
       const { token, user } = response.data;
 
       if (token) {
-        localStorage.setItem("token", token);
+       const set= await localStorage.setItem("token", token);
         updateUser(user);
         navigate("/dashboard");
       }

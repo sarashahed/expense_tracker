@@ -1,6 +1,6 @@
-import { set } from 'mongoose';
 import React from 'react'
 import CustomPieChart from "../Charts/CustomPieChart";
+import { useState, useEffect } from 'react';
 
 const COLORS = ["#875CF5", "#FA2C37", "#FF6900", "#4f39f6"];
 const RecentIncomeWithChart =({data, totalIncome}) => {

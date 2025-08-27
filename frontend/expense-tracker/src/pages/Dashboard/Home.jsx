@@ -92,8 +92,8 @@ const Home = () => {
           onSeeMore={() => navigate("/expense")}
             />
 
-            <last30DaysExpenses
-            data={dashboardData?.last30DaysExpense.transactions || []}
+          <Last30DaysExpenses
+            data={dashboardData?.last30DaysExpenses?.transactions || []}
             /> 
           
           <RecentIncomeWithChart 
