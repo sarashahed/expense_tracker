@@ -1,6 +1,6 @@
 const Income  = require("../models/Income");
 const Expense = require("../models/Expense");
-const { isValidObjectId, Types} = require("mongoose");
+const { isValidObjectId, Types } = require("mongoose");
 
 // Dashboard Data
 exports.getDashboardData = async (req, res) => {
@@ -13,8 +13,6 @@ exports.getDashboardData = async (req, res) => {
       { $match: { userId: userObjectId }}, 
       { $group: { _id: null, total: { $sum: "$amount" } } },
     ]);
-
-    console.log("totalIncome", { totalIncome, userId: isValidObjectId(userId) });
 
     const totalExpense = await Expense.aggregate([
       { $match: { userId: userObjectId }},
@@ -59,7 +57,11 @@ exports.getDashboardData = async (req, res) => {
           type: "expense",
         })
       ),
-    ].sort((a, b) => b.date - a.date);  // sort latest first
+    ].sort((a, b) => b.date - a.date);  // latest first
+
+    // Fetch all incomes and expenses
+    const allIncomes = await Income.find({ userId }).sort({ date: -1 });
+    const allExpenses = await Expense.find({ userId }).sort({ date: -1 });
 
     // Final response
     res.json({
@@ -76,10 +78,12 @@ exports.getDashboardData = async (req, res) => {
         transactions: last60DaysIncomeTransactions,
       },
       recentTransactions: lastTransactions,
+      allIncomes,    // all income transactions added
+      allExpenses,   // all expense transactions added
     });
 
-   } catch (error) {
+  } catch (error) {
     console.error("Dashboard Error:", error);
     res.status(500).json({ message: "Server Error", error: error.message || error });
   }
-}
+};

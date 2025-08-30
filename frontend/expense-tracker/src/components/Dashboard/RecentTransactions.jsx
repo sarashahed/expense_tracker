@@ -1,33 +1,39 @@
-import React from 'react'
+import React from 'react';
 import { LuArrowRight } from 'react-icons/lu';
-import moment from 'moment'
+import moment from 'moment';
 import TransactionInfoCard from '../Cards/TransactioninfoCard';
 
-const RecentTransactions = ({transactions, onSeeMore}) => {
-    return (
-        <div className="card">
-            <div className="flex items-center justify-between">
-                <h5 className="text-lg">Recent Transactions</h5>
+const RecentTransactions = ({ transactions, onSeeMore }) => {
+  // Sort transactions by date descending (newest first)
+  const sortedTransactions = [...(transactions || [])].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
 
-                <button className="card-btn" onClick= {onSeeMore}>
-                See All <LuArrowRight className="text-base"/>
-                </button>
-                </div>
-                 <div className="mt-6">
-                    {transactions?.slice(0,5)?.map((item) => (
-                         <TransactionInfoCard 
-                          key={item._id}
-                          title= {item.type === 'expense' ? item.category : item.source}
-                          icon={item.icon}
-                          date={moment(item.date).format("Do MMM YYYY")}
-                          amount={item.amount}
-                          type={item.type}
-                          hideDeleteBtn
-                          />
-                    ))}
-                 </div>
-                </div>
-    );
+  return (
+    <div className="card">
+      <div className="flex items-center justify-between">
+        <h5 className="text-lg">Recent Transactions</h5>
+        <button className="card-btn" onClick={onSeeMore}>
+          See All <LuArrowRight className="text-base" />
+        </button>
+      </div>
+
+      <div className="mt-6">
+        {/* Render all sorted transactions without slicing */}
+        {sortedTransactions.slice(0,4).map((item) => (
+          <TransactionInfoCard
+            key={item._id}
+            title={item.type === 'expense' ? item.category : item.source}
+            icon={item.icon}
+            date={moment(item.date).format('Do MMM YYYY')}
+            amount={item.amount}
+            type={item.type}
+            hideDeleteBtn
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default RecentTransactions;

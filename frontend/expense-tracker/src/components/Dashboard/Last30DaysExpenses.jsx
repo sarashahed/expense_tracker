@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 
 
  const Last30DaysExpenses = ({data}) => {
-    const [charData, setCharData] = useState([]);
+    const [chartData, setChartData] = useState([]);
     useEffect(() => {
         const result = prepareExpenseBarChartData(data);
-        setCharData(result);
+        setChartData(result);
 
         return () => {};
     },[data]);
@@ -19,7 +19,8 @@ import { useState, useEffect } from 'react';
                 <h5 className="text-lg">Last 30 Days Expenses</h5>
             </div>
 
-            <CustomBarChart data={charData}/>
+            <CustomBarChart data={chartData} xAxisKey="category" />
+
         </div>
     )
 }

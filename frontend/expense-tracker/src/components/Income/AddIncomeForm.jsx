@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState} from 'react'
+import Input from '../Inputs/Input';
+import EmojiPickerPropup from '../layouts/EmojiPickerPropup';
 
 const AddIncomeForm =({onAddIncome}) => {
     const [income, setIncome] = useState({
-        sorce:"",
+        source:"",
         amount:"",
         date:"",
         icon:"",
@@ -18,28 +20,35 @@ const AddIncomeForm =({onAddIncome}) => {
         />
 
         <Input 
+        
         value= {income.source}
         onChange={({target})=> handleChange ("source", target.value )}
         label="Income Source"
         placeholder="Freelance, Salary, etc"
         type="text"
+        className="max-w-[600px]"
         />
 
         <Input 
+     
         value={income.amount}
         onChange={({target}) => handleChange("amount", target.value)}
         label="Amount"
         placeholder=""
         type="number"
+        className="max-w-[600px]"
         />
 
         <Input 
+     
         value={income.date}
         onChange={({ target }) => handleChange("date", target.value)}
         label="Date"
         placeholder=""
         type="date"
+        className="max-w-[600px]"
         />
+
         <div className="flex justify-end mt-6">
             <button 
             type="button"
